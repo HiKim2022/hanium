@@ -1,12 +1,3 @@
-#감긴 횟수를 저장하는 원형큐
-Que_size = 10
-class blink_circular_Que
-  def  __init__(self):
-    self.front = 0
-    self.rear = 0
-    self.items = [None] * Que_size
-
-
 #눈을 통해 EAR 값 계산
 def cal_EAR(eye);
   D1 = distance.enclidean(eye[1], eye[5])
@@ -29,6 +20,8 @@ def comp_threshold(left_EAR, right_EAR)
     return 0
  
 
+
+ #주 알고리즘
 blink = [0,0,0,0,0,0,0,0,0,0]
 index = 0
 
@@ -55,8 +48,10 @@ while True:
   temp_blink = comp_threshold(left_EAR, right_EAR)
   
   blink[index] = temp_blink
+  index = index+1
   
+  if index == 10:
+    index = 0
   
-  
-  
-  
+  if sum(blink) > 4
+    print("Massage Start")
