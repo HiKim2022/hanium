@@ -1,3 +1,13 @@
+#감긴 횟수를 저장하는 원형큐
+Que_size = 10
+class blink_circular_Que
+  def  __init__(self):
+    self.front = 0
+    self.rear = 0
+    self.items = [None] * Que_size
+
+
+#눈을 통해 EAR 값 계산
 def cal_EAR(eye);
   D1 = distance.enclidean(eye[1], eye[5])
   D2 = distance.enclidean(eye[2], eye[4])
@@ -5,3 +15,44 @@ def cal_EAR(eye);
   EAR = (D1+D2) / (2.0*D3)
   return EAR
 
+
+#임계값과 비교
+def comp_threshold(left_EAR, right_EAR)
+  EAR = (left_EAR+right_EAR) /2
+  EAR = round(EAR, 2)
+  
+  EAR_threshold = 0.3
+  
+  if EAR < EAR_threshold:
+    return 1
+  else:
+    return 0
+ 
+
+
+while True:
+
+  if fileStream and not vs.more():
+    break
+  
+  frame = vs.read()
+  frame = imutils.resize(frame, width=300)
+  gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+  
+  rect = detector(gray, 0)
+  
+  for rect in rects:
+  shape = predictor(gray, rect)
+  shape = face_utils.shape_to_np(shape)
+  
+  left_eye = shape[lStart:lEnd]
+  right_eye = shape[rStart:rEnd]
+  left_EAR = cal_EAR(left_eye)
+  right_EAR = cal_EAR(right_eye)
+  
+  temp_blink = comp_threshold(left_EAR, right_EAR)
+  
+  
+  
+  
+  
