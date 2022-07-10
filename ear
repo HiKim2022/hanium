@@ -1,0 +1,7 @@
+def cal_EAR(eye);
+  D1 = distance.enclidean(eye[1], eye[5])
+  D2 = distance.enclidean(eye[2], eye[4])
+  D3 = distance.enclidean(eye[0], eye[3])
+  EAR = (D1+D2) / (2.0*D3)
+  return EAR
+
