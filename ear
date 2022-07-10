@@ -29,6 +29,8 @@ def comp_threshold(left_EAR, right_EAR)
     return 0
  
 
+blink = [0,0,0,0,0,0,0,0,0,0]
+index = 0
 
 while True:
 
@@ -51,6 +53,8 @@ while True:
   right_EAR = cal_EAR(right_eye)
   
   temp_blink = comp_threshold(left_EAR, right_EAR)
+  
+  blink[index] = temp_blink
   
   
   
