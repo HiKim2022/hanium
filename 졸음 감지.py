@@ -146,19 +146,4 @@ while (cap.isOpened()):
     if key == ord("q"):
         break
 
-    # -------------------------------car--------------------------------
-    ret, frame = cap.read()
-
-    if (type(frame) == type(None)):
-        break
-
-    frame = process(frame)
-    cv2.imshow('frame', frame)
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-# do a bit of cleanup
-cv2.destroyAllWindows()
-vs.stop()
-cap.release()
+  
