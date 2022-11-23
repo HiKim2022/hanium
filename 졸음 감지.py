@@ -29,8 +29,8 @@ ap.add_argument("-a", "--alarm", type=int, default=0, help="boolean used to indi
 args = vars(ap.parse_args())
 board = pyfirmata.Arduino('/dev/ttyACM0')
 pin9=board.get_pin('d:10:o')
-#pin7=board.get_pin('d:7:o')
-# check to see if we are using GPIO/TrafficHat as an alarm
+
+
 if args["alarm"] > 0:
     from gpiozero import TrafficHat
 
@@ -38,15 +38,14 @@ if args["alarm"] > 0:
     print("[INFO] using TrafficHat alarm...")
 
 
+#threadshold and init    
 EYE_AR_THRESH = 0.3
 EYE_AR_CONSEC_FRAMES = 16
-
-
 COUNTER = 0
 ALARM_ON = False
 
 
-print("[INFO] loading facial landmark predictor...")
+print("loading facial landmark predictor...")
 detector = cv2.CascadeClassifier(args["cascade"])
 predictor = dlib.shape_predictor(args["shape_predictor"])
 
@@ -55,7 +54,7 @@ predictor = dlib.shape_predictor(args["shape_predictor"])
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 
-print("[INFO] starting video stream thread...")
+print(" starting video stream thread...")
 
 vs = VideoStream(usePiCamera=True).start()
 time.sleep(1.0)
@@ -63,7 +62,7 @@ time.sleep(1.0)
 
 
 while (cap.isOpened()):
-   
+   #stream
     frame = vs.read()
     frame = imutils.resize(frame, width=450)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -73,7 +72,7 @@ while (cap.isOpened()):
                                       minNeighbors=5, minSize=(30, 30),
                                       flags=cv2.CASCADE_SCALE_IMAGE)
 
-   
+   #calculate EAR
     for (x, y, w, h) in rects:
         
         rect = dlib.rectangle(int(x), int(y), int(x + w), int(y + h))
@@ -98,6 +97,7 @@ while (cap.isOpened()):
         cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
 
         
+        # detection drowsiness
         if ear < EYE_AR_THRESH:
             COUNTER += 1
 
@@ -126,7 +126,7 @@ while (cap.isOpened()):
     cv2.imshow("Frame", frame)
     key = cv2.waitKey(1) & 0xFF
     
-    
+    #exit
     if key == ord("q"):
         break
 
